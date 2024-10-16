@@ -13,6 +13,10 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 connect_db(app)
 toolbar = DebugToolbarExtension(app)
 
+# Ensure tables are created when the app starts
+with app.app_context():
+    db.create_all()
+
 @app.route('/')
 def home_page():
     """Redirect to user listing."""
@@ -52,9 +56,8 @@ def new_user():
     if request.method == "POST":
         first_name = request.form['first_name']
         last_name = request.form['last_name']
-        image_url = request.form['image_url'] or None
+        image_url = request.form.get('image_url') or None
 
-        # Create and add the new user
         user = User(first_name=first_name, last_name=last_name, image_url=image_url)
         db.session.add(user)
         db.session.commit()
@@ -72,20 +75,4 @@ def delete_user(user_id):
     db.session.commit()
     flash(f"User {user.first_name} {user.last_name} deleted!")
     return redirect(url_for('list_users'))
-
-
-    if request.method == "POST":
-        user.first_name = request.form['first_name']
-        user.last_name = request.form['last_name']
-        user.image_url = request.form['image_url']
-
-        db.session.commit()
-        flash(f"User {user.first_name} {user.last_name} updated!")
-        return redirect(url_for('user_detail', user_id=user.id))
-
-    return render_template('edit_user.html', user=user)
-
-
-
-
 

@@ -10,14 +10,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
-    image_url = db.Column(db.Text, nullable=False, default='https://via.placeholder.com/150')
-
-    def __repr__(self):
-        """Show info about user."""
-        return f"<User {self.id} {self.first_name} {self.last_name}>"
+    image_url = db.Column(db.Text, nullable=True)
 
 def connect_db(app):
-    """Connect the database to the Flask app."""
+    """Connect to the database."""
     db.app = app
     db.init_app(app)
+
 
