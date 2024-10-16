@@ -13,6 +13,10 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 connect_db(app)
 toolbar = DebugToolbarExtension(app)
 
+# Ensure tables are created when the app starts
+with app.app_context():
+    db.create_all()
+
 @app.route('/')
 def home_page():
     """Redirect to user listing."""
