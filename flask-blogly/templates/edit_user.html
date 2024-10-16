@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ user.first_name }} - Blogly{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Edit User</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="first-name" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="first-name" name="first_name"
+               value="{{ user.first_name }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="last-name" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="last-name" name="last_name"
+               value="{{ user.last_name }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="image-url" class="form-label">Image URL</label>
+        <input type="url" class="form-control" id="image-url" name="image_url"
+               value="{{ user.image_url }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{{ url_for('user_detail', user_id=user.id) }}" class="btn btn-secondary mt-2">Cancel</a>
+</form>
+{% endblock %}
