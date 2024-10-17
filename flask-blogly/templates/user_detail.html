@@ -4,26 +4,43 @@
 
 {% block content %}
 <div class="text-center">
-    <img src="{{ user.image_url }}" alt="Profile picture of {{ user.first_name }}"
-         class="rounded-circle mb-3" style="width: 150px; height: 150px;">
-    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+  <img src="{{ user.image_url }}" alt="Profile picture of {{ user.first_name }}" class="rounded-circle mb-3"
+    style="width: 150px; height: 150px;">
+  <h2>{{ user.first_name }} {{ user.last_name }}</h2>
 
-    <div class="mt-4">
-        <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-primary">
-            Edit User
-        </a>
+  <div class="mt-4">
+    <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-primary">
+      Edit User
+    </a>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-            Delete User
-        </button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+      Delete User
+    </button>
 
-        <a href="{{ url_for('list_users') }}" class="btn btn-secondary">Back to List</a>
-    </div>
+    <a href="{{ url_for('list_users') }}" class="btn btn-secondary">Back to List</a>
+  </div>
+
+  <h3 class="mt-5">Posts by {{ user.first_name }}</h3>
+  <ul class="list-group">
+    {% for post in posts %}
+    <li class="list-group-item">
+      <a href="{{ url_for('post_detail', post_id=post.id) }}" class="text-decoration-none">
+        {{ post.title }}
+      </a>
+      <small class="text-muted float-end">{{ post.created_at.strftime('%b %d, %Y at %I:%M %p') }}</small>
+    </li>
+    {% else %}
+    <li class="list-group-item text-muted">No posts yet.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{{ url_for('new_post', user_id=user.id) }}" class="btn btn-secondary mt-3">Add New Post</a>
 </div>
 
 <!-- Delete Confirmation Modal -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -36,7 +53,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST" class="d-inline">
-            <button type="submit" class="btn btn-danger">Delete User</button>
+          <button type="submit" class="btn btn-danger">Delete User</button>
         </form>
       </div>
     </div>

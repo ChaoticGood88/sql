@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Post{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Add New Post for {{ user.first_name }} {{ user.last_name }}</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="content" class="form-label">Content</label>
+        <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Post</button>
+    <a href="{{ url_for('user_detail', user_id=user.id) }}" class="btn btn-secondary mt-2">Cancel</a>
+</form>
+{% endblock %}
