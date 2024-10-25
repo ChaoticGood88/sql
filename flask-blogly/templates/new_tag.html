@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Tag{% endblock %}
+
+{% block content %}
+<h2>Add New Tag</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label for="name" class="form-label">Tag Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Tag</button>
+    <a href="{{ url_for('list_tags') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

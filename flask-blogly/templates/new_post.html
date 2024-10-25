@@ -3,8 +3,7 @@
 {% block title %}Add New Post{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">Add New Post for {{ user.first_name }} {{ user.last_name }}</h2>
-
+<h2>Add New Post for {{ user.first_name }} {{ user.last_name }}</h2>
 <form method="POST">
     <div class="mb-3">
         <label for="title" class="form-label">Title</label>
@@ -16,7 +15,21 @@
         <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
     </div>
 
+    <div class="mb-3">
+        <label>Tags</label>
+        <a href="{{ url_for('list_tags') }}" class="btn btn-link">
+            + Manage Tags
+        </a><br>
+
+        {% for tag in tags %}
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="tag{{ tag.id }}" name="tags" value="{{ tag.id }}">
+            <label class="form-check-label" for="tag{{ tag.id }}">{{ tag.name }}</label>
+        </div>
+        {% endfor %}
+    </div>
+
     <button type="submit" class="btn btn-primary">Add Post</button>
-    <a href="{{ url_for('user_detail', user_id=user.id) }}" class="btn btn-secondary mt-2">Cancel</a>
+    <a href="{{ url_for('user_detail', user_id=user.id) }}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}

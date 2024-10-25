@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Tags List{% endblock %}
+
+{% block content %}
+<h2>Tags List</h2>
+
+<ul class="list-group mb-3">
+    {% for tag in tags %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{{ url_for('tag_detail', tag_id=tag.id) }}" class="text-decoration-none">
+            {{ tag.name }}
+        </a>
+        <a href="{{ url_for('edit_tag', tag_id=tag.id) }}" class="btn btn-sm btn-primary">Edit</a>
+        <form action="{{ url_for('delete_tag', tag_id=tag.id) }}" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+    </li>
+    {% else %}
+    <li class="list-group-item text-muted">No tags available.</li>
+    {% endfor %}
+</ul>
+
+<!-- Navigation Buttons -->
+<div class="mt-4">
+    <a href="{{ url_for('list_users') }}" class="btn btn-secondary">Back to User List</a>
+    <a href="{{ url_for('new_post', user_id=1) }}" class="btn btn-secondary">Create New Post</a>
+    <!-- Update user_id if needed -->
+    <a href="{{ url_for('new_tag') }}" class="btn btn-primary">Add New Tag</a>
+</div>
+{% endblock %}
